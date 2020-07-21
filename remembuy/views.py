@@ -73,17 +73,19 @@ def login_for_api(request):
 
 def api_items(request):
     login_for_api(request)
-    return HttpResponse(json.dumps([
-        dict(
-            id=x.id,
-            name=x.name,
-            createdAt=x.created_at,
-            user=x.user.username,
-            completed=x.completed,
-            completedAt=x.completed_at,
-        )
-        for x in Item.objects.filter(completed=False).select_related('user')
-    ]))
+    return HttpResponse(
+        json.dumps([
+            dict(
+                id=x.id,
+                name=x.name,
+                createdAt=x.created_at,
+                user=x.user.username,
+                completed=x.completed,
+                completedAt=x.completed_at,
+            )
+            for x in Item.objects.filter(completed=False).select_related('user')
+        ]),
+        content_type='application/json')
 
 
 def api_add(request):
