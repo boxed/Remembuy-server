@@ -80,8 +80,15 @@ WSGI_APPLICATION = 'remembuy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'remembuy',
+        'USER': os.environ.get('DOKKU_MYSQL_MYSQL_ENV_MYSQL_USER', 'root'),
+        'PASSWORD': os.environ.get('DOKKU_MYSQL_MYSQL_ENV_MYSQL_PASSWORD', ''),
+        'HOST': os.environ.get('DOKKU_MYSQL_MYSQL_PORT_3306_TCP_ADDR', '127.0.0.1'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': 'set collation_connection=utf8mb4_unicode_ci; SET sql_mode=\'STRICT_TRANS_TABLES\'',
+        },
     }
 }
 
