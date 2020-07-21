@@ -77,13 +77,15 @@ def json_response(data):
         content_type='application/json',
     )
 
+
 def api_items(request):
     login_for_api(request)
     return json_response(
-        json.dumps([
+        [
             x.as_dict()
             for x in Item.objects.filter(completed=False).select_related('user')
-        ]))
+        ]
+    )
 
 
 def api_add(request):
