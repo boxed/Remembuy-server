@@ -13,7 +13,7 @@ class Item(models.Model):
         return dict(
             id=self.id,
             name=self.name,
-            createdAt=self.created_at.isoformat(),
+            createdAt=self.created_at.timestamp(),
             user=self.user.username,
             completed=self.completed,
             completedAt=self.completed_at.timestamp() if self.completed_at else None,
