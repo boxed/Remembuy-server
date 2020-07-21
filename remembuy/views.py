@@ -64,9 +64,10 @@ def index(request):
 
 def login_for_api(request):
     if request.user.is_anonymous:
+        data = request.GET if request.method == 'GET' else request.POST
         request.user = auth.authenticate(
-            username=request.REQUEST['username'],
-            password=request.REQUEST['password'],
+            username=data['username'],
+            password=data['password'],
         )
 
 
