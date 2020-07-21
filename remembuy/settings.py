@@ -27,7 +27,9 @@ SECRET_KEY = '$gsegg4ni@n$ehr*g_s5udtkui!-%2z6771%5#5jljdt_+=8p^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'remembuy.kodare.com',
+]
 
 
 # Application definition
