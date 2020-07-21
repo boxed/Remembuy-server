@@ -16,5 +16,5 @@ class Item(models.Model):
             createdAt=self.created_at.isoformat(),
             user=self.user.username,
             completed=self.completed,
-            completedAt=self.completed_at.isoformat() if self.completed_at else None,
+            completedAt=self.completed_at.timestamp() if self.completed_at else None,
         )
