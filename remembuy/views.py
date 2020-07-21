@@ -78,10 +78,10 @@ def api_items(request):
             dict(
                 id=x.id,
                 name=x.name,
-                createdAt=x.created_at,
+                createdAt=x.created_at.isoformat(),
                 user=x.user.username,
                 completed=x.completed,
-                completedAt=x.completed_at,
+                completedAt=x.completed_at.isoformat() if x.completed_at else None,
             )
             for x in Item.objects.filter(completed=False).select_related('user')
         ]),
