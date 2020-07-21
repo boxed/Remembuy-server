@@ -135,3 +135,17 @@ STATIC_ROOT = Path(__file__).parent.parent / 'static/'
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+if not DEBUG:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn="https://3dd494f6bbaf41f5a41248dfac15e1e9@o238340.ingest.sentry.io/5353434",
+        integrations=[DjangoIntegration()],
+
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
