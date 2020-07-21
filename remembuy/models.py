@@ -9,3 +9,12 @@ class Item(models.Model):
     completed = models.BooleanField(default=False)
     completed_at = models.DateTimeField(null=True)
 
+    def as_dict(self):
+        return dict(
+            id=self.id,
+            name=self.name,
+            createdAt=self.created_at.isoformat(),
+            user=self.user.username,
+            completed=self.completed,
+            completedAt=self.completed_at.isoformat() if self.completed_at else None,
+        )

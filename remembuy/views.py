@@ -71,42 +71,41 @@ def login_for_api(request):
         )
 
 
+def json_response(data):
+    return HttpResponse(
+        json.dumps(data),
+        content_type='application/json',
+    )
+
 def api_items(request):
     login_for_api(request)
-    return HttpResponse(
+    return json_response(
         json.dumps([
-            dict(
-                id=x.id,
-                name=x.name,
-                createdAt=x.created_at.isoformat(),
-                user=x.user.username,
-                completed=x.completed,
-                completedAt=x.completed_at.isoformat() if x.completed_at else None,
-            )
+            x.as_dict()
             for x in Item.objects.filter(completed=False).select_related('user')
-        ]),
-        content_type='application/json')
+        ]))
 
 
 def api_add(request):
     login_for_api(request)
 
-    Item.objects.create(user=request.user, name=request.POST['name'])
-    return HttpResponse('OK')
+    return json_response(
+        Item.objects.create(user=request.user, name=request.POST['name']).as_dict(),
+    )
 
 
 def api_complete(request, id):
     login_for_api(request)
 
     Item.objects.filter(pk=id).update(completed=True)
-    return HttpResponse('OK')
+    return json_response(Item.objects.get(pk=id).as_dict())
 
 
 def api_un_complete(request, id):
     login_for_api(request)
 
     Item.objects.filter(pk=id).update(completed=False)
-    return HttpResponse('OK')
+    return json_response(Item.objects.get(pk=id).as_dict())
 
 
 def api_edit(request, id):
@@ -115,7 +114,7 @@ def api_edit(request, id):
     item = Item.objects.get(pk=id)
     item.name = request.POST['name']
     item.save()
-    return HttpResponse('OK')
+    return json_response(Item.objects.get(pk=id).as_dict())
 
 
 def redirect_login(request):
