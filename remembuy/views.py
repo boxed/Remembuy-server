@@ -7,6 +7,7 @@ from django.http import (
     HttpResponseRedirect,
 )
 from django.utils.safestring import mark_safe
+from django.views.decorators.csrf import csrf_exempt
 from iommi import (
     Page,
     html,
@@ -88,6 +89,7 @@ def api_items(request):
     )
 
 
+@csrf_exempt
 def api_add(request):
     login_for_api(request)
 
@@ -96,6 +98,7 @@ def api_add(request):
     )
 
 
+@csrf_exempt
 def api_complete(request, id):
     login_for_api(request)
 
@@ -103,6 +106,7 @@ def api_complete(request, id):
     return json_response(Item.objects.get(pk=id).as_dict())
 
 
+@csrf_exempt
 def api_un_complete(request, id):
     login_for_api(request)
 
@@ -110,6 +114,7 @@ def api_un_complete(request, id):
     return json_response(Item.objects.get(pk=id).as_dict())
 
 
+@csrf_exempt
 def api_edit(request, id):
     login_for_api(request)
 
