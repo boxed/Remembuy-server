@@ -99,29 +99,29 @@ def api_add(request):
 
 
 @csrf_exempt
-def api_complete(request, id):
+def api_complete(request):
     login_for_api(request)
 
-    Item.objects.filter(pk=id).update(completed=True)
+    Item.objects.filter(pk=request.POST['id']).update(completed=True)
     return json_response(Item.objects.get(pk=id).as_dict())
 
 
 @csrf_exempt
-def api_un_complete(request, id):
+def api_un_complete(request):
     login_for_api(request)
 
-    Item.objects.filter(pk=id).update(completed=False)
+    Item.objects.filter(pk=request.POST['id']).update(completed=False)
     return json_response(Item.objects.get(pk=id).as_dict())
 
 
 @csrf_exempt
-def api_edit(request, id):
+def api_edit(request):
     login_for_api(request)
 
-    item = Item.objects.get(pk=id)
+    item = Item.objects.get(pk=request.POST['id'])
     item.name = request.POST['name']
     item.save()
-    return json_response(Item.objects.get(pk=id).as_dict())
+    return json_response(Item.objects.get(pk=request.POST['id']).as_dict())
 
 
 def redirect_login(request):
