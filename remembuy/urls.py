@@ -10,11 +10,13 @@ from remembuy.views import (
     login,
     logout,
     redirect_login,
+    api_autocomplete,
 )
 
 urlpatterns = [
     path('', index),
     path('api/items/', api_items),
+    path('api/autocomplete/', api_autocomplete),
     path('api/add/', api_add),
     path('api/complete/', api_complete),
     path('api/un_complete/', api_un_complete),
